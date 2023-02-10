@@ -29,11 +29,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const bot = createBot();
 
   if(req.method === "POST") {
-    console.log("TOKEN:", req.headers["X-Telegram-Bot-Api-Secret-Token"]);
-    if(req.headers["X-Telegram-Bot-Api-Secret-Token"] !== process.env.BOT_SECRET) {
-      // @ts-ignore
-      await bot.context.sendMessage("No Token");
-      res.end();
+
+    if(req.headers["X-Telegram-Bot-Api-Secret-Token".toLowerCase()] !== process.env.BOT_SECRET) {
+      throw new Error("WERWER");
     } else {
       await bot.handleUpdate(req.body, res);
     }
