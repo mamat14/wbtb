@@ -61,11 +61,7 @@ function createBot() {
         await ctx.sendMessage("Привет, вот график этого года");
         const bol = await getBOL();
         await ctx.sendMessage(JSON.stringify(bol));
-    })
-
-    bot.command("getleague", async (ctx: Context) => {
-        const res = await parseKoleikiTable()
-        await ctx.replyWithHTML(res);
+        await ctx.reply("League", MAIN_MENU);
     })
 
     // bot.help((ctx) => ctx.reply('Send me a sticker'));
