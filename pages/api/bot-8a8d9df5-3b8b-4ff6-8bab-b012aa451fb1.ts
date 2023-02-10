@@ -60,7 +60,6 @@ function createBot() {
     bot.command("schedule", async (ctx: Context) => {
         await ctx.sendMessage("Привет, вот график этого года");
         const bol = await getBOL();
-        await ctx.sendMessage(JSON.stringify(bol));
         await ctx.replyWithHTML(await getOpenLeagueHtml());
     })
 
