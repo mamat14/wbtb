@@ -47,21 +47,24 @@ const users = {}
 // });
 
 
+function getDict(user: any) {
+    return dicts.ru;
+}
+
 function createBot() {
     const bot = new Telegraf(process.env.BOT_TOKEN);
+    const dict = getDict(null);
     const MAIN_MENU = Markup.keyboard([
-        ['➡️ Send $XRP', '📈 Market'],
-        ['⚖️ Balance', '⬇️ Deposit', '⬆️ Withdraw'],
-        ['🔔 Notificaiton', '👥 Contact'],
+        [dict.look_open_leagues]
     ])
         .resize();
 
     bot.start((ctx) => ctx.reply(dicts.ru.greet));
-    bot.command("schedule", async (ctx: Context) => {
+    bot.hears(message(dict.look_open_leagues), async (ctx: Context) => {
         await ctx.sendMessage("Привет, вот график этого года");
         const bol = await getBOL();
-        await ctx.sendMessage(JSON.stringify(bol));
-        await ctx.reply("League", MAIN_MENU);
+        const res = JSON.stringify(bol);
+        await ctx.reply(res, MAIN_MENU);
     })
 
     // bot.help((ctx) => ctx.reply('Send me a sticker'));

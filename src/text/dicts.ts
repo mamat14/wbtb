@@ -5,5 +5,6 @@ export const dicts = {
 };
 
 export type BotDictionary = {
-    "greet": string
+    "greet": string,
+    look_open_leagues: string
 }
