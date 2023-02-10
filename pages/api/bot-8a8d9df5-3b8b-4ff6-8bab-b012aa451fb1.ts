@@ -3,7 +3,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {Context, Markup, Telegraf} from "telegraf";
 import {dicts} from "../../src/text/dicts";
-import {getBOL} from "./test";
+import {getBOL, getOpenLeagueHtml} from "./test";
 
 const {message} = require('telegraf/filters');
 
@@ -61,6 +61,7 @@ function createBot() {
         await ctx.sendMessage("Привет, вот график этого года");
         const bol = await getBOL();
         await ctx.sendMessage(JSON.stringify(bol));
+        ctx.replyWithHTML(await getOpenLeagueHtml());
     })
 
     // bot.help((ctx) => ctx.reply('Send me a sticker'));
