@@ -3,7 +3,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {Context, Markup, Telegraf} from "telegraf";
 import {BotDictionary, dicts} from "../../src/text/dicts";
-import {getBOL, getOpenLeagueHtml, parseKoleikiTable} from "./test";
+import {getBOL, getOpenLeagueHtml, League, parseKoleikiTable} from "./test";
 
 const {message} = require('telegraf/filters');
 
@@ -51,12 +51,22 @@ const users = {}
 // });
 
 
-function getDict(user: any) {
-    return dicts.ru;
-}
-
 function withMainButton(ctx: CallContext, menu) {
     return [...menu, [ctx.dict.main_menu]]
+}
+
+async function createLeagueMenu(ctx: CallContext) {
+    const bol = await getBOL();
+    const koleikaButtons = [[]]
+    for (const koleika of bol.koleikas) {
+        if(koleikaButtons[koleikaButtons.length - 1].length <= 3) {
+            koleikaButtons[koleikaButtons.length - 1].push(koleika.description);
+        } else {
+            koleikaButtons.push([koleika.description])
+        }
+    }
+    const keyboard = withMainButton(ctx, koleikaButtons);
+    return Markup.keyboard(keyboard).resize();
 }
 
 function createBot(userContext: CallContext) {
@@ -67,15 +77,10 @@ function createBot(userContext: CallContext) {
     ]).resize();
 
     bot.start((ctx) => ctx.reply(dict.greet, MAIN_MENU));
-    bot.command("main", (ctx) => ctx.reply(dict.greet, MAIN_MENU));
 
     bot.hears(dict.look_open_leagues, async (ctx: Context) => {
-        const bol = await getBOL();
-        const koleikaButtons = bol.koleikas.map(k => [k.description]);
-        const keyboard = withMainButton(userContext, koleikaButtons);
-        const openLeagueDates = Markup.keyboard(keyboard);
-
-        await ctx.reply(dict.high_here_are_your_league, openLeagueDates);
+        const leagueMenu = await createLeagueMenu(userContext);
+        await ctx.reply(dict.high_here_are_your_league, leagueMenu);
     })
 
     bot.help((ctx) => ctx.reply(dict.main_menu, MAIN_MENU));

@@ -1,12 +1,12 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import { parse, HTMLElement, Node } from 'node-html-parser';
 
-type League = {
+export type League = {
     id: number,
     name: string,
     koleikas: Koleika[]
 }
-type Koleika = {
+export type Koleika = {
     id: number,
     description: string
 };
