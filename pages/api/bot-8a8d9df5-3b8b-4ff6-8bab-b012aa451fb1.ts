@@ -25,5 +25,9 @@ bot.launch({
 }).then(res => console.log("Bot launched")).catch(q => console.error("Bot launch failed"));
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await bot.handleUpdate(req.body, res);
+  if(req.method === "POST") {
+    await bot.handleUpdate(req.body, res);
+  } else {
+    res.json({"hello": "world"});
+  }
 }
