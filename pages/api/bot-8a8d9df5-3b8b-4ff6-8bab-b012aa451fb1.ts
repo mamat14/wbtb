@@ -10,17 +10,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const bot = new Telegraf(process.env.BOT_TOKEN);
 
   bot.start((ctx) => ctx.reply(dicts.ru.greet));
-  bot.help((ctx) => ctx.reply('Send me a sticker'));
-  bot.on(message('sticker'), (ctx: Context) => ctx.reply('👍'));
-  bot.hears('hi', (ctx: Context) => ctx.reply('Hey there'));
-  bot.on(message("text"), (ctx: Context) => ctx.reply("Hello"));
-
-// Start webhook via launch method (preferred)
-  await bot.createWebhook({
-      domain: "wbtb-six.vercel.app",
-      path: "/api/bot-8a8d9df5-3b8b-4ff6-8bab-b012aa451fb1",
-      secret_token: process.env.BOT_SECRET,
+  bot.command("schedule", (ctx: Context) => {
+    ctx.sendMessage("Привет")
   })
+  // bot.help((ctx) => ctx.reply('Send me a sticker'));
+  // bot.on(message('sticker'), (ctx: Context) => ctx.reply('👍'));
+  // bot.hears('hi', (ctx: Context) => ctx.reply('Hey there'));
+  // bot.on(message("text"), (ctx: Context) => ctx.reply("Hello"));
 
   if(req.method === "POST") {
     await bot.handleUpdate(req.body, res);
