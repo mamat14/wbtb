@@ -33,6 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if(req.headers["X-Telegram-Bot-Api-Secret-Token"] !== process.env.BOT_SECRET) {
       // @ts-ignore
       await bot.context.sendMessage("No Token");
+      res.end();
     } else {
       await bot.handleUpdate(req.body, res);
     }
