@@ -61,7 +61,7 @@ function createBot() {
         await ctx.sendMessage("Привет, вот график этого года");
         const bol = await getBOL();
         await ctx.sendMessage(JSON.stringify(bol));
-        ctx.replyWithHTML(await getOpenLeagueHtml());
+        await ctx.replyWithHTML(await getOpenLeagueHtml());
     })
 
     // bot.help((ctx) => ctx.reply('Send me a sticker'));
