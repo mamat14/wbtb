@@ -58,7 +58,7 @@ function createBot() {
         [dict.look_open_leagues]
     ]).resize();
 
-    bot.start((ctx) => ctx.reply(dicts.ru.greet, MAIN_MENU));
+    bot.start((ctx) => ctx.reply(dict.greet, MAIN_MENU));
     bot.hears(message(dict.look_open_leagues), async (ctx: Context) => {
         await ctx.sendMessage("Привет, вот график этого года");
         const bol = await getBOL();
