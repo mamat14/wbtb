@@ -10,10 +10,10 @@ function createBot() {
   const bot = new Telegraf(process.env.BOT_TOKEN);
 
   bot.start((ctx) => ctx.reply(dicts.ru.greet));
-  bot.command("schedule", (ctx: Context) => {
-    ctx.sendMessage("Привет 2")
+  bot.command("schedule", async (ctx: Context) => {
+    await ctx.sendMessage("Привет, вот твой график");
+    ctx.sendMessage("https://hastalavista.pl/dyscypliny/badminton/liga-open/lista-zgloszen/")
   })
-
 
 
   // bot.help((ctx) => ctx.reply('Send me a sticker'));
@@ -25,12 +25,16 @@ function createBot() {
   return bot;
 }
 
+function checkSecurity(req: NextApiRequest) {
+  return req.headers["X-Telegram-Bot-Api-Secret-Token".toLowerCase()] !== process.env.BOT_SECRET;
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const bot = createBot();
 
   if(req.method === "POST") {
-    if(req.headers["X-Telegram-Bot-Api-Secret-Token".toLowerCase()] !== process.env.BOT_SECRET) {
-      throw new Error("WERWER");
+    if(checkSecurity(req)) {
+      throw new Error("Not Found");
     } else {
       await bot.handleUpdate(req.body, res);
     }
