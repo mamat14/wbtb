@@ -63,7 +63,7 @@ function createBot() {
     //     await ctx.sendMessage(JSON.stringify(bol));
     // })
     bot.command("getleague", async (ctx: Context) => {
-        await ctx.replyWithHTML(await getOpenLeagueHtml());
+        await ctx.sendMessage("Hello");
     })
 
     // bot.help((ctx) => ctx.reply('Send me a sticker'));
