@@ -2,10 +2,14 @@
 
 import {NextApiRequest, NextApiResponse} from "next";
 import {Context, Markup, Telegraf} from "telegraf";
-import {dicts} from "../../src/text/dicts";
+import {BotDictionary, dicts} from "../../src/text/dicts";
 import {getBOL, getOpenLeagueHtml, parseKoleikiTable} from "./test";
 
 const {message} = require('telegraf/filters');
+
+type CallContext = {
+    dict: BotDictionary
+}
 
 const users = {}
 
@@ -51,22 +55,30 @@ function getDict(user: any) {
     return dicts.ru;
 }
 
-function createBot() {
+function withMainButton(ctx: CallContext, menu) {
+    return [...menu, [ctx.dict.main_menu]]
+}
+
+function createBot(userContext: CallContext) {
     const bot = new Telegraf(process.env.BOT_TOKEN);
-    const dict = getDict(null);
+    const dict = userContext.dict;
     const MAIN_MENU = Markup.keyboard([
         [dict.look_open_leagues]
     ]).resize();
 
     bot.start((ctx) => ctx.reply(dict.greet, MAIN_MENU));
+    bot.command("main", (ctx) => ctx.reply(dict.greet, MAIN_MENU));
+
     bot.hears(dict.look_open_leagues, async (ctx: Context) => {
-        await ctx.sendMessage("Привет, вот график этого года");
         const bol = await getBOL();
-        const res = JSON.stringify(bol);
-        await ctx.reply(res, MAIN_MENU);
+        const koleikaButtons = bol.koleikas.map(k => [k.description]);
+        const keyboard = withMainButton(userContext, koleikaButtons);
+        const openLeagueDates = Markup.keyboard(keyboard);
+
+        await ctx.reply(dict.high_here_are_your_league, openLeagueDates);
     })
 
-    // bot.help((ctx) => ctx.reply('Send me a sticker'));
+    bot.help((ctx) => ctx.reply(dict.main_menu, MAIN_MENU));
     // bot.on(message('sticker'), (ctx: Context) => ctx.reply('👍'));
     // bot.hears('hi', (ctx: Context) => ctx.reply('Hey there'));
     // bot.on(message("text"), (ctx: Context) => ctx.reply("Hello"));
@@ -80,7 +92,7 @@ function checkSecurity(req: NextApiRequest) {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const bot = createBot();
+    const bot = createBot({dict: dicts.ru});
 
     if (req.method === "POST") {
         if (checkSecurity(req)) {

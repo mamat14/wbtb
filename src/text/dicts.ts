@@ -6,5 +6,7 @@ export const dicts = {
 
 export type BotDictionary = {
     "greet": string,
-    look_open_leagues: string
+    look_open_leagues: string,
+    high_here_are_your_league: string,
+    main_menu: string
 }
