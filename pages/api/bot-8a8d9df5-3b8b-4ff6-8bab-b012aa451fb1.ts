@@ -11,7 +11,7 @@ function createBot() {
 
   bot.start((ctx) => ctx.reply(dicts.ru.greet));
   bot.command("schedule", (ctx: Context) => {
-    ctx.sendMessage("Привет")
+    ctx.sendMessage("Привет 2")
   })
 
 
