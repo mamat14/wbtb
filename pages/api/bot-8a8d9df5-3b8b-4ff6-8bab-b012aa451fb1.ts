@@ -3,7 +3,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {Context, Markup, Telegraf} from "telegraf";
 import {dicts} from "../../src/text/dicts";
-import {getBOL, getOpenLeagueHtml} from "./test";
+import {getBOL, getOpenLeagueHtml, parseKoleikiTable} from "./test";
 
 const {message} = require('telegraf/filters');
 
@@ -57,13 +57,15 @@ function createBot() {
         .resize();
 
     bot.start((ctx) => ctx.reply(dicts.ru.greet));
-    // bot.command("schedule", async (ctx: Context) => {
-    //     await ctx.sendMessage("Привет, вот график этого года");
-    //     const bol = await getBOL();
-    //     await ctx.sendMessage(JSON.stringify(bol));
-    // })
+    bot.command("schedule", async (ctx: Context) => {
+        await ctx.sendMessage("Привет, вот график этого года");
+        const bol = await getBOL();
+        await ctx.sendMessage(JSON.stringify(bol));
+    })
+
     bot.command("getleague", async (ctx: Context) => {
-        await ctx.sendMessage("Hello");
+        const res = await parseKoleikiTable()
+        await ctx.replyWithHTML(res);
     })
 
     // bot.help((ctx) => ctx.reply('Send me a sticker'));
