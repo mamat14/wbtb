@@ -56,10 +56,9 @@ function createBot() {
     const dict = getDict(null);
     const MAIN_MENU = Markup.keyboard([
         [dict.look_open_leagues]
-    ])
-        .resize();
+    ]).resize();
 
-    bot.start((ctx) => ctx.reply(dicts.ru.greet));
+    bot.start((ctx) => ctx.reply(dicts.ru.greet, MAIN_MENU));
     bot.hears(message(dict.look_open_leagues), async (ctx: Context) => {
         await ctx.sendMessage("Привет, вот график этого года");
         const bol = await getBOL();
