@@ -16,13 +16,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   bot.on(message("text"), (ctx: Context) => ctx.reply("Hello"));
 
 // Start webhook via launch method (preferred)
-  await bot.launch({
-    webhook: {
-      domain: process.env.VERCEL_URL,
-      port: 8080,
-      hookPath: "/api/bot-8a8d9df5-3b8b-4ff6-8bab-b012aa451fb1",
-      secretToken: process.env.BOT_SECRET,
-    },
+  await bot.createWebhook({
+      domain: "wbtb-six.vercel.app",
+      path: "/api/bot-8a8d9df5-3b8b-4ff6-8bab-b012aa451fb1",
+      secret_token: process.env.BOT_SECRET,
   })
 
   if(req.method === "POST") {
