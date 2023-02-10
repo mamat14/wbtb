@@ -22,27 +22,23 @@ async function createLeagueMenu(ctx: CallContext) {
     return Markup.keyboard(koleikaButtons).resize();
 }
 
-type Command = "look_open_leagues";
-const commandNames: Record<Command, string> = {
-    look_open_leagues: "look_open_leagues"
-}
 
 function createBot(userContext: CallContext) {
     const bot = new Telegraf(process.env.BOT_TOKEN);
     const dict = userContext.dict;
     const MAIN_MENU = Markup.keyboard([[dict.look_open_leagues]]).resize();
+    const sendMainMenu = async (ctx: Context) => {
+        await ctx.reply(dict.main_menu, MAIN_MENU)
+    }
 
     //1
-    bot.start((ctx) => {
-        ctx.setMyCommands([{command: "main_menu", description: dict.main_menu}]);
-        ctx.reply(dict.greet, MAIN_MENU);
+    bot.start(async (ctx) => {
+        await ctx.setMyCommands([{command: "main_menu", description: dict.main_menu}]);
+        await sendMainMenu(ctx);
     });
 
-    bot.command("main_menu", (ctx) => {
-        ctx.reply(dict.main_menu, MAIN_MENU)
-    })
-
-    bot.help((ctx) => ctx.reply(dict.main_menu, MAIN_MENU));
+    bot.command("main_menu", sendMainMenu)
+    bot.help(sendMainMenu);
 
 
     //просмотр всех лиг
