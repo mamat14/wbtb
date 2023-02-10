@@ -51,13 +51,9 @@ const users = {}
 // });
 
 
-function withMainButton(ctx: CallContext, menu) {
-    return [...menu, [ctx.dict.main_menu]]
-}
-
 async function createLeagueMenu(ctx: CallContext) {
     const bol = await getBOL();
-    const koleikaButtons = [[]]
+    const koleikaButtons = [[ctx.dict.main_menu]]
     for (const koleika of bol.koleikas) {
         if(koleikaButtons[koleikaButtons.length - 1].length <= 3) {
             koleikaButtons[koleikaButtons.length - 1].push(koleika.description);
@@ -65,8 +61,7 @@ async function createLeagueMenu(ctx: CallContext) {
             koleikaButtons.push([koleika.description])
         }
     }
-    const keyboard = withMainButton(ctx, koleikaButtons);
-    return Markup.keyboard(keyboard).resize();
+    return Markup.keyboard(koleikaButtons).resize();
 }
 
 function createBot(userContext: CallContext) {
