@@ -23,7 +23,7 @@ export async function createBot() {
     await bot.use(stage.middleware());
 
     //patch bot
-    await bot.use((ctx, next) => {
+    await bot.use(async (ctx, next) => {
         ctx.getDict = function () {
             const dictId = this.session.dictId;
             if (dictId && dicts[dictId]) {
@@ -32,6 +32,7 @@ export async function createBot() {
                 throw new Error("dictId is not defined")
             }
         }
+        await next();
     })
 
 
