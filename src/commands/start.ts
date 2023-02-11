@@ -6,9 +6,5 @@ import {startBotScene} from "../scenes/start";
 
 export async function startBot(ctx: MyContext) {
     ctx.session = {_id: getSessionId(ctx), loginData: {}, ...ctx.session}
-    if(!ctx.session.dictId) {
-        await startBotScene(ctx);
-    } else {
-
-    }
+    await startBotScene(ctx);
 }
