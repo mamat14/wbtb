@@ -30,5 +30,8 @@ export class MyContext extends Context {
     constructor(update: Update, telegram: Telegram, botInfo: UserFromGetMe) {
         console.log('Creating context for %j', update)
         super(update, telegram, botInfo)
+        this.session = undefined;
+        this.scene = undefined;
+        this.wizard = undefined;
     }
 }
