@@ -28,7 +28,11 @@ export function getMongoSessionStore(mongoClient: MongoClient): SessionStore<MyS
             }
         },
         async get(name: string) {
-            return await sessionCollection.findOne({_id: name})
+            const res = await sessionCollection.findOne({_id: name})
+            if(res == null) {
+                return undefined;
+            }
+            return res;
         }
     }
 }
