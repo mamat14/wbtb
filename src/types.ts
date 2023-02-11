@@ -14,9 +14,14 @@ export interface MySession extends Scenes.WizardSession {
 }
 
 export class MyContext extends Context {
-    session: MySession
-    scene: Scenes.SceneContextScene<MyContext, Scenes.WizardSessionData>;
-    wizard: Scenes.WizardContextWizard<MyContext>;
+    constructor(update: Update, telegram: Telegram, botInfo: UserFromGetMe) {
+        console.log('Creating context for %j', update);
+        super(update, telegram, botInfo);
+    }
+
+    session: MySession = undefined
+    scene: Scenes.SceneContextScene<MyContext, Scenes.WizardSessionData> = undefined;
+    wizard: Scenes.WizardContextWizard<MyContext> = undefined;
 
     getDict(): BotDictionary {
         const dictId = this.session.dictId;
@@ -25,13 +30,5 @@ export class MyContext extends Context {
         } else {
             throw new Error("dictId is not defined")
         }
-    }
-
-    constructor(update: Update, telegram: Telegram, botInfo: UserFromGetMe) {
-        console.log('Creating context for %j', update)
-        super(update, telegram, botInfo)
-        this.session = undefined;
-        this.scene = undefined;
-        this.wizard = undefined;
     }
 }
