@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {getBOL} from "../../src/parse/bol";
-import {createBot} from "./bot-8a8d9df5-3b8b-4ff6-8bab-b012aa451fb1";
+import {createBot} from "../../src/bot";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const res2 = await createBot();
