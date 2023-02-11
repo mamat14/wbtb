@@ -10,7 +10,7 @@ import {getMongoSessionStore} from "./mongoSessionStore";
 import {startWizard} from "./scenes/start";
 
 export async function createBot() {
-    const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN, {contextType: MyContext});
+    const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
 
     await bot.start(startBot);
     await bot.help(sendMainMenu);

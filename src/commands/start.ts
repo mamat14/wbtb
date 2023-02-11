@@ -1,5 +1,3 @@
-import {cmds} from "./names";
-import {sendMainMenu} from "./main_menu";
 import {MyContext} from "../types";
 import {getSessionId} from "../mongoSessionStore";
 import {startBotScene} from "../scenes/start";
