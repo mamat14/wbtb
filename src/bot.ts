@@ -6,12 +6,23 @@ import {cmds} from "./commands/names";
 import {openLeagueCommand} from "./commands/open_league";
 import {loginDataWizard, startLogin} from "./scenes/login";
 import {getMongoClient} from "./mongodb";
-import {getMongoSessionStore} from "./mongoSessionStore";
+import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
 import {startWizard} from "./scenes/start";
 
 export async function createBot() {
-    const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
+    const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN, {contextType: MyContext});
 
+    //сессия
+    const mongoClient = await getMongoClient();
+    const sessionStore = getMongoSessionStore(mongoClient)
+    await bot.use(session({store: sessionStore, getSessionKey: getSessionId}));
+
+    //сцены
+    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard]);
+    await bot.use(stage.middleware());
+
+
+    //other stuff
     await bot.start(startBot);
     await bot.help(sendMainMenu);
     await bot.command(cmds.main_menu, sendMainMenu)
@@ -19,14 +30,6 @@ export async function createBot() {
     await bot.hears(cmds.look_OL, openLeagueCommand)
     await bot.hears(cmds.login, startLogin)
 
-    //сессия
-    const mongoClient = await getMongoClient();
-    const sessionStore = getMongoSessionStore(mongoClient)
-    await bot.use(session({store: sessionStore}));
-
-    //сцены
-    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard]);
-    await bot.use(stage.middleware());
 
     return bot;
 }

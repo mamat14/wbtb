@@ -3,7 +3,7 @@ import {MongoClient} from "mongodb";
 import {MySession} from "./types";
 import {Context} from "telegraf";
 
-export function getSessionId(ctx: Context) {
+export async function getSessionId(ctx: Context) {
     const fromId = ctx.from?.id
     const chatId = ctx.chat?.id
     if (fromId == null || chatId == null) {
