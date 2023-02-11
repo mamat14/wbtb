@@ -20,7 +20,7 @@ async function askLanguage(ctx: MyContext) {
     } else {
         const language = Object.entries(langNames).find(x => x[1] === msg.text)
         if (!language) {
-            return await ctx.reply("НЕ ВЫШЛО" + plsEnterLang, languagesKeyboard);
+            return await ctx.reply(plsEnterLang, languagesKeyboard);
         }
         ctx.session.dictId = language[0] as DictKey;
 
