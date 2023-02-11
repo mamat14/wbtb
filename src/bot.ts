@@ -7,9 +7,10 @@ import {openLeagueCommand} from "./commands/open_league";
 import {loginDataWizard, startLogin} from "./scenes/login";
 import {getMongoClient} from "./mongodb";
 import {getMongoSessionStore} from "./mongoSessionStore";
+import {startWizard} from "./scenes/start";
 
 export async function createBot() {
-    const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
+    const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN, {contextType: MyContext});
 
     await bot.start(startBot);
     await bot.help(sendMainMenu);
@@ -24,7 +25,7 @@ export async function createBot() {
     await bot.use(session({store: sessionStore}));
 
     //сцены
-    const stage = new Scenes.Stage<MyContext>([loginDataWizard]);
+    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard]);
     await bot.use(stage.middleware());
 
     return bot;

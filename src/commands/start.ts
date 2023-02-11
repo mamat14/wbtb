@@ -1,10 +1,14 @@
 import {cmds} from "./names";
 import {sendMainMenu} from "./main_menu";
 import {MyContext} from "../types";
+import {getSessionId} from "../mongoSessionStore";
+import {startBotScene} from "../scenes/start";
 
 export async function startBot(ctx: MyContext) {
-    await ctx.telegram.setMyCommands([
-        {command: cmds.main_menu, description: ctx.getDict().main_menu}
-    ]);
-    await sendMainMenu(ctx);
+    ctx.session = {_id: getSessionId(ctx), loginData: {}, ...ctx.session}
+    if(!ctx.session.dictId) {
+        await startBotScene(ctx);
+    } else {
+
+    }
 }
