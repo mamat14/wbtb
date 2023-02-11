@@ -8,9 +8,10 @@ import {loginDataWizard, startLogin} from "./scenes/login";
 import {getMongoClient} from "./mongodb";
 import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
 import {startWizard} from "./scenes/start";
+import {dicts} from "./text/dicts";
 
 export async function createBot() {
-    const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN, {contextType: MyContext});
+    const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
 
     //сессия
     const mongoClient = await getMongoClient();
@@ -20,6 +21,18 @@ export async function createBot() {
     //сцены
     const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard]);
     await bot.use(stage.middleware());
+
+    //patch bot
+    await bot.use((ctx, next) => {
+        ctx.getDict = function () {
+            const dictId = this.session.dictId;
+            if (dictId && dicts[dictId]) {
+                return dicts[dictId]
+            } else {
+                throw new Error("dictId is not defined")
+            }
+        }
+    })
 
 
     //other stuff

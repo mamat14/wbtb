@@ -13,22 +13,9 @@ export interface MySession extends Scenes.WizardSession {
     dictId?: DictKey;
 }
 
-export class MyContext extends Context {
-    constructor(update: Update, telegram: Telegram, botInfo: UserFromGetMe) {
-        console.log('Creating context for %j', update);
-        super(update, telegram, botInfo);
-    }
-
-    session: MySession = undefined
-    scene: Scenes.SceneContextScene<MyContext, Scenes.WizardSessionData> = undefined;
-    wizard: Scenes.WizardContextWizard<MyContext> = undefined;
-
-    getDict(): BotDictionary {
-        const dictId = this.session.dictId;
-        if (dictId && dicts[dictId]) {
-            return dicts[dictId]
-        } else {
-            throw new Error("dictId is not defined")
-        }
-    }
+export interface MyContext extends Context {
+    session: MySession
+    scene: Scenes.SceneContextScene<MyContext, Scenes.WizardSessionData>;
+    wizard: Scenes.WizardContextWizard<MyContext>;
+    getDict(): BotDictionary
 }
