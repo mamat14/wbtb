@@ -39,5 +39,6 @@ export const startWizard = new Scenes.WizardScene<MyContext>(
             {command: cmds.main_menu, description: ctx.getDict().main_menu}
         ]);
         await sendMainMenu(ctx);
+        return ctx.scene.leave();
     }
 );
