@@ -12,7 +12,7 @@ import {sendMainMenu} from "../../src/commands/main_menu";
 import {startBot} from "../../src/commands/start";
 
 
-async function createBot() {
+export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN, {contextType: MyContext});
 
     bot.start(startBot);

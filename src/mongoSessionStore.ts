@@ -3,7 +3,7 @@ import {MongoClient} from "mongodb";
 import {MySession} from "./types";
 
 export function getMongoSessionStore(mongoClient: MongoClient): SessionStore<MySession> {
-    const sessionCollection = mongoClient.db("somedb").collection<MySession>("session")
+    const sessionCollection = mongoClient.db("wbtb").collection<MySession>("sessions")
     return {
         async delete(name: string): Promise<void> {
             const res = await sessionCollection.deleteOne({_id: name});
