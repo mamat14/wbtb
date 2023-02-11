@@ -1,7 +1,6 @@
 import {Markup, Scenes} from 'telegraf';
 import {MyContext} from "../types";
 import {DictKey, dicts, langNames} from "../text/dicts";
-import {cmds} from "../commands/names";
 import {sendMainMenu} from "../commands/main_menu";
 
 export const START_BOT_SCENE_ID = 'LANGUAGE_DATA_WIZARD_SCENE_ID';
@@ -36,7 +35,7 @@ export const startWizard = new Scenes.WizardScene<MyContext>(
     async (ctx: MyContext) => {
         await ctx.sendMessage(ctx.getDict().thank_you);
         await ctx.telegram.setMyCommands([
-            {command: cmds.main_menu, description: ctx.getDict().main_menu}
+            {command: "main_menu", description: ctx.getDict().main_menu}
         ]);
         await sendMainMenu(ctx);
         return ctx.scene.leave();

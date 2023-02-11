@@ -12,4 +12,5 @@ export const ruDict: BotDictionary = {
     thank_you_for_login: "Спасибо за логин. Сохранил Ваши данные",
     enter_preffered_language_pls: "Введите предпочтительный язык пожалуйста",
     thank_you: "Спасибо",
+    unknown_command: "Неизвестная команда",
 }

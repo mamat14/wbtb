@@ -2,13 +2,13 @@ import {Scenes, session, Telegraf} from "telegraf";
 import {MyContext} from "./types";
 import {startBot} from "./commands/start";
 import {sendMainMenu} from "./commands/main_menu";
-import {cmds} from "./commands/names";
-import {openLeagueCommand} from "./commands/open_league";
 import {loginDataWizard, startLogin} from "./scenes/login";
 import {getMongoClient} from "./mongodb";
 import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
 import {startWizard} from "./scenes/start";
 import {dicts} from "./text/dicts";
+import {message} from "telegraf/filters";
+import {openLeagueCommand} from "./commands/open_league";
 
 export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
@@ -39,11 +39,24 @@ export async function createBot() {
     //other stuff
     await bot.start(startBot);
     await bot.help(sendMainMenu);
-    await bot.command(cmds.main_menu, sendMainMenu)
-    await bot.hears(cmds.main_menu, sendMainMenu)
-    await bot.hears(cmds.look_OL, openLeagueCommand)
-    await bot.hears(cmds.login, startLogin)
-
+    await bot.command("main_menu", sendMainMenu)
+    await bot.on(message('text'), async (ctx: MyContext) => {
+        const msg = ctx.message
+        if(!("text" in msg)) {
+            throw new Error("expected message")
+        }
+        const text = msg.text;
+        if(text == ctx.getDict().main_menu) {
+            await sendMainMenu(ctx)
+        } else if(text == ctx.getDict().login) {
+            await startLogin(ctx)
+        } else if(text == ctx.getDict().look_open_leagues) {
+            await openLeagueCommand(ctx)
+        } else {
+            await ctx.reply(ctx.getDict().unknown_command);
+            await sendMainMenu(ctx);
+        }
+    })
 
     return bot;
 }
