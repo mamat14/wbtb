@@ -22,7 +22,7 @@ export function getMongoSessionStore(mongoClient: MongoClient): SessionStore<MyS
             }
         },
         async set(name: string, value: MySession): Promise<void> {
-            const res = await sessionCollection.insertOne(value)
+            const res = await sessionCollection.updateOne({_id: name}, { $set: value }, {upsert: true})
             if (!res.acknowledged) {
                 throw new Error("failed to set session")
             }
