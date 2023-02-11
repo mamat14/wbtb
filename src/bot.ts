@@ -13,19 +13,10 @@ import {dicts} from "./text/dicts";
 export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
 
-    //сессия
-    const mongoClient = await getMongoClient();
-    const sessionStore = getMongoSessionStore(mongoClient)
-    await bot.use(session({store: sessionStore, getSessionKey: getSessionId}));
-
-    //сцены
-    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard]);
-    await bot.use(stage.middleware());
-
     //patch bot
     await bot.use(async (ctx, next) => {
         ctx.getDict = function () {
-            const dictId = this.session.dictId;
+            const dictId = ctx.session.dictId;
             if (dictId && dicts[dictId]) {
                 return dicts[dictId]
             } else {
@@ -34,6 +25,15 @@ export async function createBot() {
         }
         await next();
     })
+
+    //сессия
+    const mongoClient = await getMongoClient();
+    const sessionStore = getMongoSessionStore(mongoClient)
+    await bot.use(session({store: sessionStore, getSessionKey: getSessionId}));
+
+    //сцены
+    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard]);
+    await bot.use(stage.middleware());
 
 
     //other stuff
