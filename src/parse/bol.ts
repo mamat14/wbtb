@@ -1,4 +1,5 @@
 import { parse, HTMLElement, Node } from 'node-html-parser';
+import {MyContext} from "../types";
 
 export type League = {
     id: number,
@@ -7,7 +8,8 @@ export type League = {
 }
 export type Koleika = {
     id: number,
-    description: string
+    description: string,
+    registered?: boolean
 };
 
 const BADMINTON_OPEN_LEAGUE_ID = 8563081;
@@ -20,7 +22,7 @@ function getKoleika(label: HTMLElement): Koleika {
     return {id, description};
 }
 
-function parseBadmintonOpenLeague(root: HTMLElement): League {
+function parseBadmintonOpenLeague(ctx: MyContext, root: HTMLElement): League {
     const dateDiv = root.getElementById("rez_ligi_zapisy_kolejki_rd_div");
     const koleikas = dateDiv.querySelectorAll("label").map(getKoleika);
     const id = BADMINTON_OPEN_LEAGUE_ID;
@@ -28,12 +30,13 @@ function parseBadmintonOpenLeague(root: HTMLElement): League {
     return {id, name, koleikas};
 }
 
-export async function getOpenLeagueHtml() {
+export async function getOpenLeagueHtml(ctx: MyContext) {
+
     const resp = await fetch("https://hastalavista.pl/dyscypliny/badminton/liga-open/lista-zgloszen/");
     return await resp.text();
 }
 
-export async function getBOL() {
+export async function getBOL(ctx: MyContext) {
     const text = await getOpenLeagueHtml();
-    return parseBadmintonOpenLeague(parse(text));
+    return parseBadmintonOpenLeague(ctx, parse(text));
 }

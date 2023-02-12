@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@next/font": "13.1.6",
+    "@types/node-fetch": "^2.6.2",
+    "@types/set-cookie-parser": "^2.4.2",
+    "cookie": "^0.5.0",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.6",
     "mongodb": "^5.0.1",
@@ -17,9 +20,11 @@
     "node-html-parser": "^6.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "set-cookie-parser": "^2.5.1",
     "telegraf": "^4.11.2"
   },
   "devDependencies": {
+    "@types/cookie": "^0.5.1",
     "@types/node": "18.13.0",
     "@types/react": "18.0.27"
   }
