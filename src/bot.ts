@@ -60,7 +60,6 @@ export async function createBot() {
             await allOpenLeaguesCommand(ctx)
         } else {
             await ctx.reply(ctx.getDict().unknown_command);
-            await sendMainMenu(ctx);
         }
     })
 
