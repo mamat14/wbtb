@@ -1,10 +1,11 @@
 import {BotDictionary} from "./dicts";
 
 export const ruDict: BotDictionary = {
+    locale: "ru_UA",
     greet: "Привет!",
     look_future_open_leagues: "Посмотреть предстоящие открытые лиги",
     look_all_open_leagues: "Посмотреть все открытые лиги",
-    high_here_are_your_league: "Привет, вот твоя лига",
+    high_here_are_the_leagues: "Привет, вот лиги",
     main_menu: "Главное меню",
     help: "Помощь",
     login: "Войти (Логин)",

@@ -11,11 +11,12 @@ export const langNames: Record<DictKey, string> = {
 export type DictKey = "ru"
 
 export type BotDictionary = {
+    locale: string,
     greet: string,
     thank_you: string,
     look_future_open_leagues: string,
     look_all_open_leagues: string,
-    high_here_are_your_league: string,
+    high_here_are_the_leagues: string,
     main_menu: string,
     help: string,
     login: string,

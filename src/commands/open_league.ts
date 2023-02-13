@@ -9,7 +9,12 @@ async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
         const futureLeague = new Date(koleika.date).valueOf() > Date.now().valueOf();
         if(futureLeague || showAll) {
             const suffix = koleika.registered ? "✅" : "➖";
-            const description = koleika.order + " - " + koleika.date + " " + suffix;
+            const date = new Date(koleika.date);
+            const options: Intl.DateTimeFormatOptions = { weekday: "narrow", year: '2-digit', month: 'long', day: 'numeric' };
+            const locale = "ru_UA"
+            const dateLocal = date.toLocaleDateString(locale, options)
+
+            const description = koleika.order + " - " + dateLocal + " " + suffix;
             koleikaButtons.push([description])
         }
     }
@@ -23,10 +28,10 @@ async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
 
 export async function openLeaguesCommand(ctx: MyContext) {
     const leagueMenu = await createLeagueMenu(ctx, false);
-    await ctx.reply(ctx.getDict().high_here_are_your_league, leagueMenu);
+    await ctx.reply(ctx.getDict().high_here_are_the_leagues, leagueMenu);
 }
 
 export async function allOpenLeaguesCommand(ctx: MyContext) {
     const leagueMenu = await createLeagueMenu(ctx, true);
-    await ctx.reply(ctx.getDict().high_here_are_your_league, leagueMenu);
+    await ctx.reply(ctx.getDict().high_here_are_the_leagues, leagueMenu);
 }
