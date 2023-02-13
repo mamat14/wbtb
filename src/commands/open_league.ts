@@ -10,7 +10,7 @@ async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
         if(futureLeague || showAll) {
             const suffix = koleika.registered ? "✅" : "➖";
             const date = new Date(koleika.date);
-            const options: Intl.DateTimeFormatOptions = { weekday: "narrow", year: '2-digit', month: 'long', day: 'numeric' };
+            const options: Intl.DateTimeFormatOptions = { weekday: "short", year: '2-digit', month: 'long', day: 'numeric' };
             const locale = ctx.getDict().locale;
             const dateLocal = date.toLocaleDateString(locale, options)
 
