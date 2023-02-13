@@ -8,7 +8,7 @@ import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
 import {startWizard} from "./scenes/start";
 import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
-import {openLeagueCommand} from "./commands/open_league";
+import {allOpenLeaguesCommand, openLeaguesCommand} from "./commands/open_league";
 
 export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
@@ -46,16 +46,18 @@ export async function createBot() {
     await bot.command("main_menu", sendMainMenu)
     await bot.on(message('text'), async (ctx: MyContext) => {
         const msg = ctx.message
-        if(!("text" in msg)) {
+        if (!("text" in msg)) {
             throw new Error("expected message")
         }
         const text = msg.text;
-        if(text == ctx.getDict().main_menu) {
+        if (text == ctx.getDict().main_menu) {
             await sendMainMenu(ctx)
-        } else if(text == ctx.getDict().login) {
+        } else if (text == ctx.getDict().login) {
             await startLogin(ctx)
-        } else if(text == ctx.getDict().look_open_leagues) {
-            await openLeagueCommand(ctx)
+        } else if (text == ctx.getDict().look_future_open_leagues) {
+            await openLeaguesCommand(ctx)
+        } else if (text == ctx.getDict().look_all_open_leagues) {
+            await allOpenLeaguesCommand(ctx)
         } else {
             await ctx.reply(ctx.getDict().unknown_command);
             await sendMainMenu(ctx);
