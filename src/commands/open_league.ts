@@ -7,7 +7,7 @@ async function createLeagueMenu(ctx: MyContext) {
     const koleikaButtons = [[ctx.getDict().main_menu]]
     for (const koleika of bol.koleikas) {
         const prefix = koleika.registered ? "✅" : "➖";
-        const description = prefix + koleika.date
+        const description = prefix + " - " + koleika.order + " - " + koleika.date
         if (koleikaButtons[koleikaButtons.length - 1].length <= 3) {
             koleikaButtons[koleikaButtons.length - 1].push(description);
         } else {
