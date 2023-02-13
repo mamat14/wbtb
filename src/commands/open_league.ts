@@ -16,7 +16,7 @@ async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
     if(showAll) {
         koleikaButtons.push([ctx.getDict().look_future_open_leagues]);
     } else {
-        koleikaButtons.push([ctx.getDict().look_future_open_leagues]);
+        koleikaButtons.push([ctx.getDict().look_all_open_leagues]);
     }
     return Markup.keyboard(koleikaButtons).resize().oneTime();
 }
