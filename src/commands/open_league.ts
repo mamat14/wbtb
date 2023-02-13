@@ -3,16 +3,18 @@ import {getBOL} from "../parse/bol";
 import {Markup} from "telegraf";
 
 async function createLeagueMenu(ctx: MyContext) {
-    const bol = await getBOL();
+    const bol = await getBOL(ctx);
     const koleikaButtons = [[ctx.getDict().main_menu]]
     for (const koleika of bol.koleikas) {
+        const prefix = koleika.registered ? "\xE2\x9C\x85 " : "\xE2\x9E\x96";
+        const description = prefix + koleika.date
         if (koleikaButtons[koleikaButtons.length - 1].length <= 3) {
-            koleikaButtons[koleikaButtons.length - 1].push(koleika.description);
+            koleikaButtons[koleikaButtons.length - 1].push(description);
         } else {
-            koleikaButtons.push([koleika.description])
+            koleikaButtons.push([description])
         }
     }
-    return Markup.keyboard(koleikaButtons).resize();
+    return Markup.keyboard(koleikaButtons).resize().oneTime();
 }
 
 export async function openLeagueCommand(ctx: MyContext) {

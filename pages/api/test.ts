@@ -2,9 +2,10 @@ import {NextApiRequest, NextApiResponse} from "next";
 
 import {getLoginCookie} from "../../src/cookieGetter";
 import {MyContext} from "../../src/types";
+import {getBOL} from "../../src/parse/bol";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    res.json(await getLoginCookie({session: { loginData: {login: "maracuia", pwd: "m7dQWCh9@7ew"}}} as MyContext));
+    res.json(await getBOL({session: { loginData: {login: "maracuia", pwd: "m7dQWCh9@7ew"}}} as MyContext));
 }
 
 // await fetch("https://hastalavista.pl/wp-admin/admin-ajax.php", {
@@ -24,4 +25,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 //   "method": "POST",
 //   "mode": "cors"
 // });
-

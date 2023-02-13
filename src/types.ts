@@ -18,4 +18,5 @@ export interface MyContext extends Context {
     scene: Scenes.SceneContextScene<MyContext, Scenes.WizardSessionData>;
     wizard: Scenes.WizardContextWizard<MyContext>;
     getDict(): BotDictionary
+    isLoggedIn(): boolean
 }

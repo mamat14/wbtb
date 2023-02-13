@@ -23,6 +23,10 @@ export async function createBot() {
                 throw new Error("dictId is not defined")
             }
         }
+
+        ctx.isLoggedIn = function () {
+            return !!ctx.session.loginData.login && !!ctx.session.loginData.pwd
+        }
         await next();
     })
 
