@@ -1,7 +1,7 @@
 import {BotDictionary} from "./dicts";
 
 export const ruDict: BotDictionary = {
-    locale: "ru_UA",
+    locale: "ru-UA",
     greet: "Привет!",
     look_future_open_leagues: "Посмотреть предстоящие открытые лиги",
     look_all_open_leagues: "Посмотреть все открытые лиги",
