@@ -8,13 +8,14 @@ async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
     for (const koleika of bol.koleikas) {
         const futureLeague = new Date(koleika.date).valueOf() > Date.now().valueOf();
         if(futureLeague || showAll) {
+            const prefix = showAll ? koleika.order + " - " : ""
             const suffix = koleika.registered ? "✅" : "➖";
             const date = new Date(koleika.date);
             const options: Intl.DateTimeFormatOptions = { weekday: "short", year: '2-digit', month: 'long', day: 'numeric' };
             const locale = ctx.getDict().locale;
             const dateLocal = date.toLocaleDateString(locale, options)
 
-            const description = koleika.order + " - " + dateLocal + " " + suffix;
+            const description = prefix + dateLocal + " " + suffix;
             koleikaButtons.push([description])
         }
     }
