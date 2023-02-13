@@ -8,11 +8,7 @@ async function createLeagueMenu(ctx: MyContext) {
     for (const koleika of bol.koleikas) {
         const prefix = koleika.registered ? "✅" : "➖";
         const description = prefix + " - " + koleika.order + " - " + koleika.date
-        if (koleikaButtons[koleikaButtons.length - 1].length <= 3) {
-            koleikaButtons[koleikaButtons.length - 1].push(description);
-        } else {
-            koleikaButtons.push([description])
-        }
+        koleikaButtons.push([description])
     }
     return Markup.keyboard(koleikaButtons).resize().oneTime();
 }
