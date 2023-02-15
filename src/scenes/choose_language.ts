@@ -32,6 +32,7 @@ export const chooseLanguageScene = new Scenes.WizardScene<MyContext>(
             ctx.session.dictId = language[0] as DictKey;
 
             await ctx.sendMessage(ctx.getDict().thank_you);
+            await ctx.scene.leave();
             await sendMainMenu(ctx);
         }
     }
