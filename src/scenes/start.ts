@@ -42,7 +42,7 @@ export const startWizard = new Scenes.WizardScene<MyContext>(
         await ctx.telegram.setMyCommands([
             {command: "main_menu", description: ctx.getDict().main_menu}
         ]);
+        await ctx.scene.leave();
         await sendMainMenu(ctx);
-        return ctx.scene.leave();
     }
 );
