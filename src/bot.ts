@@ -5,7 +5,7 @@ import {sendMainMenu} from "./commands/main_menu";
 import {loginDataWizard, startLogin} from "./scenes/login";
 import {getMongoClient} from "./mongodb";
 import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
-import {startBotScene, startWizard} from "./scenes/start";
+import {startBotScene, chooseLanguageScene} from "./scenes/start";
 import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
 import {openLeaguesScene, enterOpenLeaguesScene} from "./scenes/open_leagues";
@@ -37,7 +37,7 @@ export async function createBot() {
     await bot.use(session({store: sessionStore, getSessionKey: getSessionId}));
 
     //сцены
-    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard, openLeaguesScene(), logoutDataWizard]);
+    const stage = new Scenes.Stage<MyContext>([loginDataWizard, chooseLanguageScene, openLeaguesScene(), logoutDataWizard]);
     await bot.use(stage.middleware());
 
     //other stuff

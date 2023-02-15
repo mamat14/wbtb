@@ -3,18 +3,18 @@ import {MyContext} from "../types";
 import {DictKey, dicts, langNames} from "../text/dicts";
 import {sendMainMenu} from "../commands/main_menu";
 
-export const START_BOT_SCENE_ID = 'START_BOT_SCENE_ID';
+export const CHOOSE_LANGUAGE_SCENE = 'START_BOT_SCENE_ID';
 
 export async function startBotScene(ctx: MyContext) {
-    await ctx.scene.enter(START_BOT_SCENE_ID);
+    await ctx.scene.enter(CHOOSE_LANGUAGE_SCENE);
 }
 
 const plsEnterLang = Object.values(dicts).map(x => x.enter_preffered_language_pls).join("\n");
 const languages = Object.values(langNames).map(x => [x]);
 const languagesKeyboard = Markup.keyboard(languages).resize().oneTime();
 
-export const startWizard = new Scenes.WizardScene<MyContext>(
-    START_BOT_SCENE_ID,
+export const chooseLanguageScene = new Scenes.WizardScene<MyContext>(
+    CHOOSE_LANGUAGE_SCENE,
     async (ctx: MyContext) => {
         await ctx.reply(plsEnterLang, languagesKeyboard);
         await ctx.wizard.next();

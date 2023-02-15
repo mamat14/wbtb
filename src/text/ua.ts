@@ -24,5 +24,6 @@ export const uaDict: BotDictionary = {
     successfully_registered: "Зареєстрував на лігу",
     successfully_unregistered: "Зняв з участі в лізі",
     enter_yes_or_no: "Введіть так чи ні",
-    successfully_logged_out: "Ви успішно вийшли"
+    successfully_logged_out: "Ви успішно вийшли",
+    choose_language: "Змінити мову"
 }

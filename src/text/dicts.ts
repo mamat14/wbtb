@@ -38,4 +38,5 @@ export type BotDictionary = {
     are_you_sure_to_logout: string,
     enter_yes_or_no: string,
     successfully_logged_out: string,
+    choose_language: string,
 }
