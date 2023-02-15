@@ -14,6 +14,7 @@ export const loginDataWizard = new Scenes.WizardScene<MyContext>(
         if(ctx.message.from.is_bot) {
             return ;
         }
+
         // validation example
         ctx.session.loginData = {};
 
