@@ -5,7 +5,7 @@ import {sendMainMenu} from "../commands/main_menu";
 export const LOGIN_DATA_WIZARD_SCENE_ID = 'LOGIN_DATA_WIZARD_SCENE';
 
 export async function startLogin(ctx: MyContext) {
-    ctx.scene.enter(LOGIN_DATA_WIZARD_SCENE_ID)
+    await ctx.scene.enter(LOGIN_DATA_WIZARD_SCENE_ID);
 }
 
 export const loginDataWizard = new Scenes.WizardScene<MyContext>(

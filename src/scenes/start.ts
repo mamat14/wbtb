@@ -5,7 +5,7 @@ import {sendMainMenu} from "../commands/main_menu";
 
 export const START_BOT_SCENE_ID = 'START_BOT_SCENE_ID';
 export async function startBotScene(ctx: MyContext) {
-    ctx.scene.enter(START_BOT_SCENE_ID)
+    await ctx.scene.enter(START_BOT_SCENE_ID);
 }
 
 async function askLanguage(ctx: MyContext) {
