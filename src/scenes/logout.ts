@@ -11,7 +11,7 @@ export async function startLogout(ctx: MyContext) {
 export const logoutDataWizard = new Scenes.WizardScene<MyContext>(
     LOGOUT_DATA_WIZARD_SCENE_ID,
     async (ctx: MyContext) => {
-        const keyboard = Markup.keyboard([[ctx.getDict().yes, ctx.getDict().no]]).resize().oneTime();
+        const keyboard = Markup.keyboard([[ctx.getDict().yes, ctx.getDict().no]]).resize();
         await ctx.reply(ctx.getDict().are_you_sure_to_logout, keyboard);
         await ctx.wizard.next();
     },
@@ -27,7 +27,7 @@ export const logoutDataWizard = new Scenes.WizardScene<MyContext>(
             await ctx.scene.leave();
             await sendMainMenu(ctx);
         } else {
-            const keyboard = Markup.keyboard([[ctx.getDict().yes, ctx.getDict().no]]).resize().oneTime();
+            const keyboard = Markup.keyboard([[ctx.getDict().yes, ctx.getDict().no]]).resize();
             await ctx.reply(ctx.getDict().enter_yes_or_no, keyboard);
         }
     }

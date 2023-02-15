@@ -11,7 +11,7 @@ export async function changeLanguage(ctx: MyContext) {
 
 const plsEnterLang = Object.values(dicts).map(x => x.enter_preffered_language_pls).join("\n");
 const languages = Object.values(langNames).map(x => [x]);
-const languagesKeyboard = Markup.keyboard(languages).resize().oneTime();
+const languagesKeyboard = Markup.keyboard(languages).resize();
 
 export const chooseLanguageScene = new Scenes.WizardScene<MyContext>(
     CHOOSE_LANGUAGE_SCENE,

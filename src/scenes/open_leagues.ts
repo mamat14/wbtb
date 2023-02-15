@@ -36,7 +36,7 @@ async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
     } else {
         koleikaButtons.push([ctx.getDict().look_all_open_leagues]);
     }
-    return Markup.keyboard(koleikaButtons).resize().oneTime();
+    return Markup.keyboard(koleikaButtons).resize();
 }
 
 export async function openLeaguesCommand(ctx: MyContext) {
