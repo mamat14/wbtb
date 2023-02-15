@@ -77,7 +77,7 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
         await sendMainMenu(ctx);
     }
 
-    if(koleikaInFuture(k)) {
+    if(!koleikaInFuture(k)) {
         await ctx.sendMessage(ctx.getDict().league_has_already_passed);
         return;
     }
