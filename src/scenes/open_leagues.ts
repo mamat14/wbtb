@@ -4,9 +4,9 @@ import {sendMainMenu} from "../commands/main_menu";
 import {getBOL, Koleika} from "../parse/bol";
 import {getLoginCookie} from "../cookieGetter";
 
-export const OPEN_LEAGUES_SCENE = 'START_BOT_SCENE_ID';
+export const OPEN_LEAGUES_SCENE = 'OPEN_LEAGUES_SCENE';
 
-export async function openLeaguesScene(ctx: MyContext) {
+export async function enterOpenLeaguesScene(ctx: MyContext) {
     ctx.scene.enter(OPEN_LEAGUES_SCENE)
 }
 
@@ -88,13 +88,13 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
     await openLeaguesCommand(ctx);
 }
 
-const openLeaguesManipulator = new Scenes.BaseScene<MyContext>(OPEN_LEAGUES_SCENE);
-openLeaguesManipulator.enter(async (ctx: MyContext) => {
+export const openLeaguesScene = new Scenes.BaseScene<MyContext>(OPEN_LEAGUES_SCENE);
+openLeaguesScene.enter(async (ctx: MyContext) => {
     await ctx.reply(ctx.getDict().open_league_instructions);
     await openLeaguesCommand(ctx);
 });
 
-openLeaguesManipulator.on("message", ctx => {
+openLeaguesScene.on("message", ctx => {
     async (ctx: MyContext) => {
         const msg = ctx.message
         if (!("text" in msg)) {
