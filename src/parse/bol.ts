@@ -1,7 +1,5 @@
-import {parse, HTMLElement, Node} from 'node-html-parser';
+import {parse, HTMLElement} from 'node-html-parser';
 import {MyContext} from "../types";
-import {is} from "css-select";
-import {cookies} from "next/headers";
 import {getLoginCookie} from "../cookieGetter";
 
 export type League = {
