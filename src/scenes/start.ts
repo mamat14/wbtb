@@ -9,31 +9,27 @@ export async function startBotScene(ctx: MyContext) {
     await ctx.scene.enter(START_BOT_SCENE_ID);
 }
 
-async function askLanguage(ctx: MyContext) {
-    const msg = ctx.message;
-    const plsEnterLang = Object.values(dicts).map(x => x.enter_preffered_language_pls).join("\n");
-    const lanugages = Object.values(langNames).map(x => [x]);
-    const languagesKeyboard = Markup.keyboard(lanugages).resize().oneTime();
-
-    if (!("text" in msg)) {
-        return await ctx.reply(plsEnterLang, languagesKeyboard);
-    } else {
-        const language = Object.entries(langNames).find(x => x[1] === msg.text)
-        if (!language) {
-            return await ctx.reply(plsEnterLang, languagesKeyboard);
-        }
-        ctx.session.dictId = language[0] as DictKey;
-
-        return await ctx.wizard.next();
-    }
-}
+const plsEnterLang = Object.values(dicts).map(x => x.enter_preffered_language_pls).join("\n");
+const languages = Object.values(langNames).map(x => [x]);
+const languagesKeyboard = Markup.keyboard(languages).resize().oneTime();
 
 export const startWizard = new Scenes.WizardScene<MyContext>(
     START_BOT_SCENE_ID,
     async (ctx: MyContext) => {
-        if (!ctx.session.dictId) {
-            return await askLanguage(ctx);
+        await ctx.reply(plsEnterLang, languagesKeyboard);
+        await ctx.wizard.next();
+    },
+    async (ctx: MyContext) => {
+        const msg = ctx.message;
+        if (!("text" in msg)) {
+            return await ctx.reply(plsEnterLang, languagesKeyboard);
         } else {
+            const language = Object.entries(langNames).find(x => x[1] === msg.text)
+            if (!language) {
+                return await ctx.reply(plsEnterLang, languagesKeyboard);
+            }
+            ctx.session.dictId = language[0] as DictKey;
+
             return await ctx.wizard.next();
         }
     },
