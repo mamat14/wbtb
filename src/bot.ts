@@ -25,7 +25,7 @@ export async function createBot() {
         }
 
         ctx.isLoggedIn = function () {
-            return !!ctx.session.loginData.login && !!ctx.session.loginData.pwd
+            return !!ctx.session.loginData.login || !!ctx.session.loginData.pwd
         }
         await next();
     })

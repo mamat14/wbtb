@@ -61,9 +61,6 @@ function parseBadmintonOpenLeague(ctx: MyContext, root: HTMLElement): League {
 }
 
 export async function getOpenLeagueHtml(ctx: MyContext) {
-    ctx.isLoggedIn = function () {
-        return !!ctx.session.loginData.login && !!ctx.session.loginData.pwd
-    }
     if (!ctx.isLoggedIn()) {
         const response = await fetch("https://hastalavista.pl/dyscypliny/badminton/liga-open/lista-zgloszen/");
         return await response.text();
