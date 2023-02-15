@@ -3,9 +3,16 @@ import {NextApiRequest, NextApiResponse} from "next";
 import {getLoginCookie} from "../../src/cookieGetter";
 import {MyContext} from "../../src/types";
 import {getBOL} from "../../src/parse/bol";
+import {getKoleikaFromMessage} from "../../src/scenes/open_leagues";
+import {ruDict} from "../../src/text/ru";
+import {BotDictionary} from "../../src/text/dicts";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    res.json(await getBOL({session: { loginData: {login: "maracuia", pwd: "m7dQWCh9@7ew"}}} as MyContext));
+    res.json(await getKoleikaFromMessage({
+        session: {loginData: {login: "maracuia", pwd: "m7dQWCh9@7ew"}}, getDict(): BotDictionary {
+            return ruDict;
+        }
+    } as MyContext, "вс, 26 февраля 23 г."));
 }
 
 // await fetch("https://hastalavista.pl/wp-admin/admin-ajax.php", {

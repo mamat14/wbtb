@@ -49,11 +49,8 @@ export async function allOpenLeaguesCommand(ctx: MyContext) {
     await ctx.reply(ctx.getDict().high_here_are_the_leagues, leagueMenu);
 }
 
-async function getKoleikaFromMessage(ctx: MyContext, text: string): Promise<Koleika | null> {
-    const bol = await getBOL(ctx)
-    if (!ctx.isLoggedIn()) {
-        return null;
-    }
+export async function getKoleikaFromMessage(ctx: MyContext, text: string): Promise<Koleika | null> {
+    const bol = await getBOL(ctx);
     const koleikaMap = Object.fromEntries(bol.koleikas.map(k => [createKoleikaString(ctx, k), k]));
     if (!(bol.koleikas.length === Object.keys(koleikaMap).length)) {
         await ctx.reply(ctx.getDict().internal_error);
@@ -91,7 +88,6 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
 export function openLeaguesScene() {
     const openLeague = new Scenes.BaseScene<MyContext>(OPEN_LEAGUES_SCENE);
     openLeague.enter(async (ctx: MyContext) => {
-        await ctx.reply("QQ");
         await openLeaguesCommand(ctx);
     });
 
@@ -113,6 +109,11 @@ export function openLeaguesScene() {
                 await sendMainMenu(ctx);
                 await ctx.scene.leave();
             } else if (koleika) {
+                if (!ctx.isLoggedIn()) {
+                    await ctx.sendMessage(ctx.getDict().need_login_to_register_for_the_leagues);
+                    await ctx.scene.leave();
+                    await sendMainMenu(ctx);
+                }
                 await switchRegistration(ctx, koleika);
             } else if (text == ctx.getDict().look_all_open_leagues) {
                 await ctx.scene.leave();
