@@ -5,7 +5,7 @@ export const ruDict: BotDictionary = {
     greet: "Привет!",
     look_future_open_leagues: "Посмотреть предстоящие открытые лиги",
     look_all_open_leagues: "Посмотреть все открытые лиги",
-    high_here_are_the_leagues: "Привет, вот лиги",
+    high_here_are_the_leagues: "Привет, вот лиги. ✅ - зарегистрированы, ➖ - не зарегистрированы. для регистрации/снятия с лиги нажмине на соответствующую дату",
     main_menu: "Главное меню",
     help: "Помощь",
     login: "Войти (Логин)",
@@ -15,7 +15,6 @@ export const ruDict: BotDictionary = {
     enter_preffered_language_pls: "Введите предпочтительный язык пожалуйста",
     thank_you: "Спасибо",
     unknown_command: "Неизвестная команда",
-    open_league_instructions: "✅ - зарегистрированы, ➖ - не зарегистрированы. для регистрации/снятия с лиги нажмине на соответствующую дату",
     internal_error: "произошла ошибка в боте. свяжитесь с админом",
     need_login_to_register_for_the_leagues: "Вам нужно залогиниться чтобы зарегистрироваться на лиги."
 }

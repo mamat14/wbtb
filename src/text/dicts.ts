@@ -25,7 +25,6 @@ export type BotDictionary = {
     thank_you_for_login: string,
     enter_preffered_language_pls: string,
     unknown_command: string,
-    open_league_instructions: string
     internal_error: string,
     need_login_to_register_for_the_leagues: string
 }

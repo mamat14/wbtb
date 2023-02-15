@@ -90,7 +90,6 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
 
 export const openLeaguesScene = new Scenes.BaseScene<MyContext>(OPEN_LEAGUES_SCENE);
 openLeaguesScene.enter(async (ctx: MyContext) => {
-    await ctx.reply(ctx.getDict().open_league_instructions);
     await openLeaguesCommand(ctx);
 });
 
