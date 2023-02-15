@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         session: {loginData: {login: "maracuia", pwd: "m7dQWCh9@7ew"}}, getDict(): BotDictionary {
             return ruDict;
         }
-    } as MyContext, "вс, 26 февраля 23 г."));
+    } as MyContext, "вс, 26 февраля 23 г. ➖"));
 }
 
 // await fetch("https://hastalavista.pl/wp-admin/admin-ajax.php", {

@@ -10,11 +10,15 @@ export async function enterOpenLeaguesScene(ctx: MyContext) {
     await ctx.scene.enter(OPEN_LEAGUES_SCENE)
 }
 
-function createKoleikaString(ctx: MyContext, k: Koleika) {
+function createKoleikaString(ctx: MyContext, k: Koleika, showAll: boolean) {
+    const prefix = showAll ? k.order + " - " : ""
+    const suffix = k.registered ? "✅" : "➖";
+
     const date = new Date(k.date)
     const options: Intl.DateTimeFormatOptions = {weekday: "short", year: '2-digit', month: 'long', day: 'numeric'};
     const locale = ctx.getDict().locale;
-    return date.toLocaleDateString(locale, options);
+    const dateInLocale = date.toLocaleDateString(locale, options);
+    return prefix + dateInLocale + " " + suffix;
 }
 
 async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
@@ -23,11 +27,7 @@ async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
     for (const koleika of bol.koleikas) {
         const futureLeague = new Date(koleika.date).valueOf() > Date.now().valueOf();
         if (futureLeague || showAll) {
-            const prefix = showAll ? koleika.order + " - " : ""
-            const suffix = koleika.registered ? "✅" : "➖";
-            const dateLocal = createKoleikaString(ctx, koleika);
-
-            const description = prefix + dateLocal + " " + suffix;
+            const description = createKoleikaString(ctx, koleika, showAll);
             koleikaButtons.push([description])
         }
     }
@@ -49,14 +49,22 @@ export async function allOpenLeaguesCommand(ctx: MyContext) {
     await ctx.reply(ctx.getDict().high_here_are_the_leagues, leagueMenu);
 }
 
+function getStringRepresantations(ctx: MyContext, k: Koleika): string[] {
+    return [createKoleikaString(ctx, k, false), createKoleikaString(ctx, k, true)];
+}
+
 export async function getKoleikaFromMessage(ctx: MyContext, text: string): Promise<Koleika | null> {
     const bol = await getBOL(ctx);
-    const koleikaMap = Object.fromEntries(bol.koleikas.map(k => [createKoleikaString(ctx, k), k]));
-    if (!(bol.koleikas.length === Object.keys(koleikaMap).length)) {
+    const stringReprsArray = bol.koleikas.flatMap(k => getStringRepresantations(ctx, k).map<[string,Koleika]>(repr => [repr, k]));
+    const res = stringReprsArray.filter(x => x[0] === text)
+    if(res.length > 1) {
         await ctx.reply(ctx.getDict().internal_error);
         throw new Error("non-unique koleika representation strings. can't determine koleika id");
+    } else if(res.length == 0) {
+        return null
+    } else {
+        return res[0][1];
     }
-    return koleikaMap[text] || null;
 }
 
 async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
