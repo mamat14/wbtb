@@ -8,7 +8,7 @@ import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
 import {startBotScene, startWizard} from "./scenes/start";
 import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
-import {allOpenLeaguesCommand, openLeaguesScene, enterOpenLeaguesScene} from "./scenes/open_leagues";
+import {openLeaguesScene, enterOpenLeaguesScene} from "./scenes/open_leagues";
 import {logoutDataWizard, startLogout} from "./scenes/logout";
 
 export async function createBot() {
