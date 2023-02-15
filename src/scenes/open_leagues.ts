@@ -111,6 +111,9 @@ openLeaguesManipulator.on("message", ctx => {
             await ctx.scene.leave();
         } else if (koleika) {
             await switchRegistration(ctx, koleika);
+        } else if (text == ctx.getDict().look_all_open_leagues) {
+            await ctx.scene.leave();
+            await allOpenLeaguesCommand(ctx);
         } else {
             await sendMainMenu(ctx);
             ctx.scene.leave();

@@ -8,8 +8,7 @@ import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
 import {startWizard} from "./scenes/start";
 import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
-import {allOpenLeaguesCommand, openLeaguesCommand} from "./commands/open_league";
-import {openLeaguesScene} from "./scenes/open_leagues";
+import {allOpenLeaguesCommand, openLeaguesScene} from "./scenes/open_leagues";
 
 export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
