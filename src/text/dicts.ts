@@ -13,6 +13,8 @@ export type DictKey = "ru"
 export type BotDictionary = {
     locale: string,
     greet: string,
+    yes: string,
+    no: string,
     thank_you: string,
     look_future_open_leagues: string,
     look_all_open_leagues: string,
@@ -30,4 +32,7 @@ export type BotDictionary = {
     need_login_to_register_for_the_leagues: string,
     successfully_registered: string,
     successfully_unregistered: string,
+    are_you_sure_to_logout: string,
+    enter_yes_or_no: string,
+    successfully_logged_out: string,
 }
