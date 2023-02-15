@@ -4,6 +4,7 @@ import {DictKey, dicts, langNames} from "../text/dicts";
 import {sendMainMenu} from "../commands/main_menu";
 
 export const START_BOT_SCENE_ID = 'START_BOT_SCENE_ID';
+
 export async function startBotScene(ctx: MyContext) {
     await ctx.scene.enter(START_BOT_SCENE_ID);
 }
@@ -30,7 +31,11 @@ async function askLanguage(ctx: MyContext) {
 export const startWizard = new Scenes.WizardScene<MyContext>(
     START_BOT_SCENE_ID,
     async (ctx: MyContext) => {
-        return await askLanguage(ctx);
+        if (!ctx.session.dictId) {
+            return await askLanguage(ctx);
+        } else {
+            return await ctx.wizard.next();
+        }
     },
     async (ctx: MyContext) => {
         await ctx.sendMessage(ctx.getDict().thank_you);
