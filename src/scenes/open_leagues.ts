@@ -135,6 +135,7 @@ export function openLeaguesScene() {
                     await ctx.sendMessage(ctx.getDict().need_login_to_register_for_the_leagues);
                     await ctx.scene.leave();
                     await sendMainMenu(ctx);
+                    return;
                 }
                 await switchRegistration(ctx, koleika);
                 await openLeaguesCommand(ctx);
