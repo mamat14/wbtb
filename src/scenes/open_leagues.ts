@@ -21,12 +21,15 @@ function createKoleikaString(ctx: MyContext, k: Koleika, showAll: boolean) {
     return prefix + dateInLocale + " " + suffix;
 }
 
+function koleikaInFuture(k: Koleika) {
+    return new Date(k.date).valueOf() > Date.now().valueOf();
+}
+
 async function createLeagueMenu(ctx: MyContext, showAll: boolean) {
     const bol = await getBOL(ctx);
     const koleikaButtons = [[ctx.getDict().main_menu]]
     for (const koleika of bol.koleikas) {
-        const futureLeague = new Date(koleika.date).valueOf() > Date.now().valueOf();
-        if (futureLeague || showAll) {
+        if (koleikaInFuture(koleika) || showAll) {
             const description = createKoleikaString(ctx, koleika, showAll);
             koleikaButtons.push([description])
         }
@@ -73,6 +76,12 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
         await ctx.scene.leave();
         await sendMainMenu(ctx);
     }
+
+    if(koleikaInFuture(k)) {
+        await ctx.sendMessage(ctx.getDict().league_has_already_passed);
+        return;
+    }
+
     const operation = k.registered ? "usun" : "dodaj"
     const body = `action=LigiZapisyZapisz&liga_id=${k.league_id}&kole_id=${k.id}&oper=${operation}`;
     const cookie = await getLoginCookie(ctx);
