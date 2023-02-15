@@ -26,5 +26,7 @@ export type BotDictionary = {
     enter_preffered_language_pls: string,
     unknown_command: string,
     internal_error: string,
-    need_login_to_register_for_the_leagues: string
+    need_login_to_register_for_the_leagues: string,
+    successfully_registered: string,
+    successfully_unregistered: string,
 }

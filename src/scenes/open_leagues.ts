@@ -89,8 +89,9 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
     });
     if (!response.ok) {
         await ctx.reply(ctx.getDict().internal_error);
+    } else {
+        await ctx.reply(ctx.getDict().success);
     }
-    await openLeaguesCommand(ctx);
 }
 
 export function openLeaguesScene() {
@@ -123,6 +124,7 @@ export function openLeaguesScene() {
                     await sendMainMenu(ctx);
                 }
                 await switchRegistration(ctx, koleika);
+                await openLeaguesCommand(ctx);
             } else if (text == ctx.getDict().look_all_open_leagues) {
                 await ctx.scene.leave();
                 await allOpenLeaguesCommand(ctx);

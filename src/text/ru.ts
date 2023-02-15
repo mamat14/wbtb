@@ -16,5 +16,7 @@ export const ruDict: BotDictionary = {
     thank_you: "Спасибо",
     unknown_command: "Неизвестная команда",
     internal_error: "произошла ошибка в боте. свяжитесь с админом",
-    need_login_to_register_for_the_leagues: "Вам нужно залогиниться чтобы зарегистрироваться на лиги."
+    need_login_to_register_for_the_leagues: "Вам нужно залогиниться чтобы зарегистрироваться на лиги.",
+    successfully_registered: "Успешно зарегистрировал на лигу.",
+    successfully_unregistered: "Успешно снял с участия в лиге"
 }
