@@ -25,5 +25,5 @@ export const ruDict: BotDictionary = {
     successfully_unregistered: "Успешно снял с участия в лиге",
     enter_yes_or_no: "Введите да либо нет",
     successfully_logged_out: "Вы успешно вышли",
-    choose_language: "Изменить язык"
+    choose_language: "🇬🇧🇺🇦🇯🇵Изменить язык"
 }
