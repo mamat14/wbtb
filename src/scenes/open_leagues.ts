@@ -88,34 +88,39 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
     await openLeaguesCommand(ctx);
 }
 
-export const openLeaguesScene = new Scenes.BaseScene<MyContext>(OPEN_LEAGUES_SCENE);
-openLeaguesScene.enter(async (ctx: MyContext) => {
-    await openLeaguesCommand(ctx);
-});
+export function openLeaguesScene() {
+    const openLeague = new Scenes.BaseScene<MyContext>(OPEN_LEAGUES_SCENE);
+    openLeague.enter(async (ctx: MyContext) => {
+        await openLeaguesCommand(ctx);
+    });
 
-openLeaguesScene.on("message", ctx => {
-    async (ctx: MyContext) => {
-        const msg = ctx.message
-        if (!("text" in msg)) {
-            await ctx.reply(ctx.getDict().unknown_command);
-            await ctx.scene.leave();
-            await sendMainMenu(ctx);
-            return;
-        }
-        const text = msg.text;
-        const koleika = await getKoleikaFromMessage(ctx, text);
+    openLeague.on("message", ctx => {
+            async (ctx: MyContext) => {
+                const msg = ctx.message
+                if (!("text" in msg)) {
+                    await ctx.reply(ctx.getDict().unknown_command);
+                    await ctx.scene.leave();
+                    await sendMainMenu(ctx);
+                    return;
+                }
+                const text = msg.text;
+                const koleika = await getKoleikaFromMessage(ctx, text);
 
-        if (text == ctx.getDict().main_menu) {
-            await sendMainMenu(ctx);
-            await ctx.scene.leave();
-        } else if (koleika) {
-            await switchRegistration(ctx, koleika);
-        } else if (text == ctx.getDict().look_all_open_leagues) {
-            await ctx.scene.leave();
-            await allOpenLeaguesCommand(ctx);
-        } else {
-            await sendMainMenu(ctx);
-            ctx.scene.leave();
+                if (text == ctx.getDict().main_menu) {
+                    await sendMainMenu(ctx);
+                    await ctx.scene.leave();
+                } else if (koleika) {
+                    await switchRegistration(ctx, koleika);
+                } else if (text == ctx.getDict().look_all_open_leagues) {
+                    await ctx.scene.leave();
+                    await allOpenLeaguesCommand(ctx);
+                } else {
+                    await sendMainMenu(ctx);
+                    ctx.scene.leave();
+                }
+            }
         }
-    }
-});
+    )
+
+    return openLeague;
+}

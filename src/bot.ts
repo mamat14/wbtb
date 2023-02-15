@@ -36,7 +36,7 @@ export async function createBot() {
     await bot.use(session({store: sessionStore, getSessionKey: getSessionId}));
 
     //сцены
-    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard, openLeaguesScene]);
+    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard, openLeaguesScene()]);
     await bot.use(stage.middleware());
 
     //other stuff
