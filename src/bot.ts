@@ -69,6 +69,11 @@ export async function createBot() {
         } else {
             await ctx.reply(ctx.getDict().unknown_command);
         }
+
+        //set up-to-date commands
+        await ctx.telegram.setMyCommands([
+            {command: "main_menu", description: ctx.getDict().main_menu}
+        ]);
     })
 
     return bot;

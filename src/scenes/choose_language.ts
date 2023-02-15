@@ -21,8 +21,9 @@ export const chooseLanguageScene = new Scenes.WizardScene<MyContext>(
     },
     async (ctx: MyContext) => {
         const msg = ctx.message;
+
         if (!("text" in msg)) {
-            return await ctx.reply(plsEnterLang, languagesKeyboard);
+            await ctx.reply(plsEnterLang, languagesKeyboard);
         } else {
             const language = Object.entries(langNames).find(x => x[1] === msg.text)
             if (!language) {
@@ -30,15 +31,8 @@ export const chooseLanguageScene = new Scenes.WizardScene<MyContext>(
             }
             ctx.session.dictId = language[0] as DictKey;
 
-            return await ctx.wizard.next();
+            await ctx.sendMessage(ctx.getDict().thank_you);
+            await sendMainMenu(ctx);
         }
-    },
-    async (ctx: MyContext) => {
-        await ctx.sendMessage(ctx.getDict().thank_you);
-        await ctx.telegram.setMyCommands([
-            {command: "main_menu", description: ctx.getDict().main_menu}
-        ]);
-        await ctx.scene.leave();
-        await sendMainMenu(ctx);
     }
 );
