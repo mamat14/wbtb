@@ -95,6 +95,9 @@ export function openLeaguesScene() {
     });
 
     openLeague.on("message", async (ctx: MyContext) => {
+            if(ctx.message.from.is_bot) {
+                return
+            }
             const msg = ctx.message
             if (!("text" in msg)) {
                 await ctx.reply(ctx.getDict().unknown_command);
