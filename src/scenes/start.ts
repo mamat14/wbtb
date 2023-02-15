@@ -3,7 +3,7 @@ import {MyContext} from "../types";
 import {DictKey, dicts, langNames} from "../text/dicts";
 import {sendMainMenu} from "../commands/main_menu";
 
-export const START_BOT_SCENE_ID = 'LANGUAGE_DATA_WIZARD_SCENE_ID';
+export const START_BOT_SCENE_ID = 'START_BOT_SCENE_ID';
 export async function startBotScene(ctx: MyContext) {
     ctx.scene.enter(START_BOT_SCENE_ID)
 }

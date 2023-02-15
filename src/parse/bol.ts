@@ -11,6 +11,7 @@ export type League = {
 }
 export type Koleika = {
     id: number,
+    league_id: number
     date: string,
     order: number,
     registered?: boolean
@@ -28,7 +29,7 @@ function getKoleika(label: HTMLElement): Koleika {
         .map(x => x.trim())
         .filter((x) => x.length !== 0);
     const order = parseInt(orderStr);
-    return {id, date, order};
+    return {id, date, order, league_id: BADMINTON_OPEN_LEAGUE_ID};
 }
 
 function getKoleikaCheckMark(label: HTMLElement): [number, boolean] {

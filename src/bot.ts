@@ -9,6 +9,7 @@ import {startWizard} from "./scenes/start";
 import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
 import {allOpenLeaguesCommand, openLeaguesCommand} from "./commands/open_league";
+import {openLeaguesScene} from "./scenes/open_leagues";
 
 export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
@@ -55,7 +56,7 @@ export async function createBot() {
         } else if (text == ctx.getDict().login) {
             await startLogin(ctx)
         } else if (text == ctx.getDict().look_future_open_leagues) {
-            await openLeaguesCommand(ctx)
+            await openLeaguesScene(ctx)
         } else if (text == ctx.getDict().look_all_open_leagues) {
             await allOpenLeaguesCommand(ctx)
         } else {
