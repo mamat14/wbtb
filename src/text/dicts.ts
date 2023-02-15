@@ -20,6 +20,7 @@ export type BotDictionary = {
     main_menu: string,
     help: string,
     login: string,
+    logout: string,
     enter_hasta_website_login: string,
     enter_hasta_website_pwd: string,
     thank_you_for_login: string,
