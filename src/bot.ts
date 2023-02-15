@@ -52,6 +52,7 @@ export async function createBot() {
 
         if(!ctx.session.dictId) {
             await startBotScene(ctx);
+            return;
         }
 
         if (text == ctx.getDict().main_menu) {
