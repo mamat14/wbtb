@@ -7,7 +7,7 @@ import {getLoginCookie} from "../cookieGetter";
 export const OPEN_LEAGUES_SCENE = 'OPEN_LEAGUES_SCENE';
 
 export async function enterOpenLeaguesScene(ctx: MyContext) {
-    ctx.scene.enter(OPEN_LEAGUES_SCENE)
+    await ctx.scene.enter(OPEN_LEAGUES_SCENE)
 }
 
 function createKoleikaString(ctx: MyContext, k: Koleika) {
@@ -91,6 +91,7 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
 export function openLeaguesScene() {
     const openLeague = new Scenes.BaseScene<MyContext>(OPEN_LEAGUES_SCENE);
     openLeague.enter(async (ctx: MyContext) => {
+        await ctx.reply("QQ");
         await openLeaguesCommand(ctx);
     });
 
@@ -119,7 +120,7 @@ export function openLeaguesScene() {
             } else {
                 await ctx.reply(ctx.getDict().unknown_command);
                 await sendMainMenu(ctx);
-                ctx.scene.leave();
+                await ctx.scene.leave();
             }
         }
     )
