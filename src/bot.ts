@@ -5,7 +5,7 @@ import {sendMainMenu} from "./commands/main_menu";
 import {loginDataWizard, startLogin} from "./scenes/login";
 import {getMongoClient} from "./mongodb";
 import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
-import {startBotScene, chooseLanguageScene} from "./scenes/start";
+import {changeLanguage, chooseLanguageScene} from "./scenes/choose_language";
 import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
 import {openLeaguesScene, enterOpenLeaguesScene} from "./scenes/open_leagues";
@@ -52,7 +52,7 @@ export async function createBot() {
         const text = msg.text;
 
         if (!ctx.session.dictId) {
-            await startBotScene(ctx);
+            await changeLanguage(ctx);
             return;
         }
 
@@ -64,6 +64,8 @@ export async function createBot() {
             await startLogout(ctx);
         } else if (text == ctx.getDict().look_future_open_leagues) {
             await enterOpenLeaguesScene(ctx)
+        } else if (text === ctx.getDict().choose_language) {
+            await changeLanguage(ctx);
         } else {
             await ctx.reply(ctx.getDict().unknown_command);
         }

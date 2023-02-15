@@ -5,7 +5,7 @@ import {sendMainMenu} from "../commands/main_menu";
 
 export const CHOOSE_LANGUAGE_SCENE = 'START_BOT_SCENE_ID';
 
-export async function startBotScene(ctx: MyContext) {
+export async function changeLanguage(ctx: MyContext) {
     await ctx.scene.enter(CHOOSE_LANGUAGE_SCENE);
 }
 
