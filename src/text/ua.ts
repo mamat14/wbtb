@@ -1,7 +1,7 @@
 import {BotDictionary} from "./dicts";
 
 export const uaDict: BotDictionary = {
-    locale: "ua-UA",
+    locale: "uk-UA",
     greet: "Привіт!",
     yes: "Так",
     no: "Ні",
