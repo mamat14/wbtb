@@ -55,12 +55,12 @@ function getStringRepresantations(ctx: MyContext, k: Koleika): string[] {
 
 export async function getKoleikaFromMessage(ctx: MyContext, text: string): Promise<Koleika | null> {
     const bol = await getBOL(ctx);
-    const stringReprsArray = bol.koleikas.flatMap(k => getStringRepresantations(ctx, k).map<[string,Koleika]>(repr => [repr, k]));
+    const stringReprsArray = bol.koleikas.flatMap(k => getStringRepresantations(ctx, k).map<[string, Koleika]>(repr => [repr, k]));
     const res = stringReprsArray.filter(x => x[0] === text)
-    if(res.length > 1) {
+    if (res.length > 1) {
         await ctx.reply(ctx.getDict().internal_error);
         throw new Error("non-unique koleika representation strings. can't determine koleika id");
-    } else if(res.length == 0) {
+    } else if (res.length == 0) {
         return null
     } else {
         return res[0][1];
@@ -90,7 +90,11 @@ async function switchRegistration(ctx: MyContext, k: Koleika): Promise<void> {
     if (!response.ok) {
         await ctx.reply(ctx.getDict().internal_error);
     } else {
-        await ctx.reply(ctx.getDict().success);
+        if (k.registered) {
+            await ctx.reply(ctx.getDict().successfully_unregistered);
+        } else {
+            await ctx.reply(ctx.getDict().successfully_registered);
+        }
     }
 }
 
