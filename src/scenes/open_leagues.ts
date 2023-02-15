@@ -130,8 +130,9 @@ export function openLeaguesScene() {
                 await switchRegistration(ctx, koleika);
                 await openLeaguesCommand(ctx);
             } else if (text == ctx.getDict().look_all_open_leagues) {
-                await ctx.scene.leave();
                 await allOpenLeaguesCommand(ctx);
+            } else if (text == ctx.getDict().look_future_open_leagues) {
+                await openLeaguesCommand(ctx);
             } else {
                 await ctx.reply(ctx.getDict().unknown_command);
                 await sendMainMenu(ctx);
