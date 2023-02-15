@@ -95,7 +95,7 @@ export function openLeaguesScene() {
     });
 
     openLeague.on("message", async (ctx: MyContext) => {
-            if(ctx.message.from.is_bot) {
+            if (ctx.message.from.is_bot) {
                 return
             }
             const msg = ctx.message
@@ -117,6 +117,7 @@ export function openLeaguesScene() {
                 await ctx.scene.leave();
                 await allOpenLeaguesCommand(ctx);
             } else {
+                await ctx.reply(ctx.getDict().unknown_command);
                 await sendMainMenu(ctx);
                 ctx.scene.leave();
             }
