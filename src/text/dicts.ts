@@ -1,14 +1,17 @@
 import {ruDict} from "./ru";
+import {uaDict} from "./ua";
 
 export const dicts: Record<DictKey, BotDictionary> = {
-    "ru": ruDict
+    "ru": ruDict,
+    "ua": uaDict,
 };
 
 export const langNames: Record<DictKey, string> = {
-    "ru": "Русский"
+    "ru": "Русский",
+    "ua": "Українська"
 };
 
-export type DictKey = "ru"
+export type DictKey = "ru" | "ua"
 
 export type BotDictionary = {
     locale: string,
