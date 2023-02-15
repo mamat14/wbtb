@@ -40,4 +40,5 @@ export type BotDictionary = {
     successfully_logged_out: string,
     choose_language: string,
     league_has_already_passed: string,
+    get_rankings: string
 }

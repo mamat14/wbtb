@@ -10,6 +10,7 @@ import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
 import {openLeaguesScene, enterOpenLeaguesScene} from "./scenes/open_leagues";
 import {logoutDataWizard, startLogout} from "./scenes/logout";
+import {sendRankings} from "./commands/rankings";
 
 export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
@@ -66,6 +67,8 @@ export async function createBot() {
             await enterOpenLeaguesScene(ctx)
         } else if (text === ctx.getDict().choose_language) {
             await changeLanguage(ctx);
+        } else if(text == ctx.getDict().get_rankings) {
+            await sendRankings(ctx)
         } else {
             await ctx.reply(ctx.getDict().unknown_command);
         }
