@@ -5,7 +5,7 @@ import {sendMainMenu} from "./commands/main_menu";
 import {loginDataWizard, startLogin} from "./scenes/login";
 import {getMongoClient} from "./mongodb";
 import {getMongoSessionStore, getSessionId} from "./mongoSessionStore";
-import {startWizard} from "./scenes/start";
+import {startBotScene, startWizard} from "./scenes/start";
 import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
 import {allOpenLeaguesCommand, openLeaguesScene, enterOpenLeaguesScene} from "./scenes/open_leagues";
@@ -49,6 +49,11 @@ export async function createBot() {
             throw new Error("expected message")
         }
         const text = msg.text;
+
+        if(!ctx.session.dictId) {
+            await startBotScene(ctx);
+        }
+
         if (text == ctx.getDict().main_menu) {
             await sendMainMenu(ctx)
         } else if (text == ctx.getDict().login) {
