@@ -11,6 +11,9 @@ export async function startLogin(ctx: MyContext) {
 export const loginDataWizard = new Scenes.WizardScene<MyContext>(
     LOGIN_DATA_WIZARD_SCENE_ID,
     async (ctx: MyContext) => {
+        if(ctx.message.from.is_bot) {
+            return ;
+        }
         // validation example
         ctx.session.loginData = {};
 
@@ -24,6 +27,10 @@ export const loginDataWizard = new Scenes.WizardScene<MyContext>(
         }
     },
     async (ctx: MyContext) => {
+        if(ctx.message.from.is_bot) {
+            return ;
+        }
+
         const msg = ctx.message
         if (!("text" in msg) || msg.text.length < 2) {
             await ctx.reply(ctx.getDict().enter_hasta_website_pwd);
