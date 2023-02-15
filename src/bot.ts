@@ -9,7 +9,7 @@ import {startBotScene, startWizard} from "./scenes/start";
 import {dicts} from "./text/dicts";
 import {message} from "telegraf/filters";
 import {allOpenLeaguesCommand, openLeaguesScene, enterOpenLeaguesScene} from "./scenes/open_leagues";
-import {logout} from "./scenes/logout";
+import {logoutDataWizard, startLogout} from "./scenes/logout";
 
 export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
@@ -37,7 +37,7 @@ export async function createBot() {
     await bot.use(session({store: sessionStore, getSessionKey: getSessionId}));
 
     //сцены
-    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard, openLeaguesScene()]);
+    const stage = new Scenes.Stage<MyContext>([loginDataWizard, startWizard, openLeaguesScene(), logoutDataWizard]);
     await bot.use(stage.middleware());
 
     //other stuff
@@ -61,7 +61,7 @@ export async function createBot() {
         } else if (text == ctx.getDict().login) {
             await startLogin(ctx)
         } else if (text == ctx.getDict().logout) {
-            await logout(ctx);
+            await startLogout(ctx);
         } else if (text == ctx.getDict().look_future_open_leagues) {
             await enterOpenLeaguesScene(ctx)
         } else if (text == ctx.getDict().look_all_open_leagues) {
