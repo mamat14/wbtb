@@ -94,30 +94,28 @@ export function openLeaguesScene() {
         await openLeaguesCommand(ctx);
     });
 
-    openLeague.on("message", ctx => {
-            async (ctx: MyContext) => {
-                const msg = ctx.message
-                if (!("text" in msg)) {
-                    await ctx.reply(ctx.getDict().unknown_command);
-                    await ctx.scene.leave();
-                    await sendMainMenu(ctx);
-                    return;
-                }
-                const text = msg.text;
-                const koleika = await getKoleikaFromMessage(ctx, text);
+    openLeague.on("message", async (ctx: MyContext) => {
+            const msg = ctx.message
+            if (!("text" in msg)) {
+                await ctx.reply(ctx.getDict().unknown_command);
+                await ctx.scene.leave();
+                await sendMainMenu(ctx);
+                return;
+            }
+            const text = msg.text;
+            const koleika = await getKoleikaFromMessage(ctx, text);
 
-                if (text == ctx.getDict().main_menu) {
-                    await sendMainMenu(ctx);
-                    await ctx.scene.leave();
-                } else if (koleika) {
-                    await switchRegistration(ctx, koleika);
-                } else if (text == ctx.getDict().look_all_open_leagues) {
-                    await ctx.scene.leave();
-                    await allOpenLeaguesCommand(ctx);
-                } else {
-                    await sendMainMenu(ctx);
-                    ctx.scene.leave();
-                }
+            if (text == ctx.getDict().main_menu) {
+                await sendMainMenu(ctx);
+                await ctx.scene.leave();
+            } else if (koleika) {
+                await switchRegistration(ctx, koleika);
+            } else if (text == ctx.getDict().look_all_open_leagues) {
+                await ctx.scene.leave();
+                await allOpenLeaguesCommand(ctx);
+            } else {
+                await sendMainMenu(ctx);
+                ctx.scene.leave();
             }
         }
     )
