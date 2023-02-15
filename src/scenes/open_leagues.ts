@@ -44,7 +44,7 @@ export async function openLeaguesCommand(ctx: MyContext) {
     await ctx.reply(ctx.getDict().high_here_are_the_leagues, leagueMenu);
 }
 
-export async function allOpenLeaguesCommand(ctx: MyContext) {
+async function allOpenLeaguesCommand(ctx: MyContext) {
     const leagueMenu = await createLeagueMenu(ctx, true);
     await ctx.reply(ctx.getDict().high_here_are_the_leagues, leagueMenu);
 }

@@ -64,8 +64,6 @@ export async function createBot() {
             await startLogout(ctx);
         } else if (text == ctx.getDict().look_future_open_leagues) {
             await enterOpenLeaguesScene(ctx)
-        } else if (text == ctx.getDict().look_all_open_leagues) {
-            await allOpenLeaguesCommand(ctx)
         } else {
             await ctx.reply(ctx.getDict().unknown_command);
         }
