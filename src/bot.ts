@@ -11,6 +11,7 @@ import {message} from "telegraf/filters";
 import {openLeaguesScene, enterOpenLeaguesScene} from "./scenes/open_leagues";
 import {logoutDataWizard, startLogout} from "./scenes/logout";
 import {sendRankings} from "./commands/rankings";
+import {sendResultsOfKoleika} from "./commands/league_results";
 
 export async function createBot() {
     const bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
@@ -69,6 +70,8 @@ export async function createBot() {
             await changeLanguage(ctx);
         } else if(text == ctx.getDict().get_rankings) {
             await sendRankings(ctx)
+        } else if(text == ctx.getDict().view_league_results) {
+            await sendResultsOfKoleika(ctx);
         } else {
             await ctx.reply(ctx.getDict().unknown_command);
         }

@@ -4,8 +4,9 @@ import {Markup} from "telegraf";
 export const sendMainMenu = async (ctx: MyContext) => {
     const lookLeagues = ctx.getDict().look_future_open_leagues;
     const lookRankings = ctx.getDict().get_rankings;
+    const lookResults = ctx.getDict().view_league_results;
     const loginOrLogout = ctx.isLoggedIn() ? ctx.getDict().logout : ctx.getDict().login;
-    const actions = [[lookLeagues], [lookRankings], [loginOrLogout, ctx.getDict().choose_language]];
+    const actions = [[lookLeagues], [lookResults], [lookRankings], [loginOrLogout, ctx.getDict().choose_language]];
     const MAIN_MENU = Markup.keyboard(actions).resize();
     await ctx.reply(ctx.getDict().main_menu, MAIN_MENU)
 }
